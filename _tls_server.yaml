@@ -19,6 +19,11 @@ tls_server_base: &tls_server_base
       description: Select an existing TLS server profile. TLS server profiles are of type "ltm clientssl" on BIG-IP.
       enumFromBigip: ltm/profile/client-ssl
       default: "/Common/clientssl"
+    tls_server_cipher_group_name:
+      title: TLS Server Cipher Group
+      description: Select an existing cipher group.
+      enumFromBigip: ltm/cipher/group
+      default: "/Common/f5-secure"
     tls_cert_name:
       title: TLS Certificate
       description: Select an existing BIG-IP SSL certificate.
@@ -36,6 +41,9 @@ tls_server_base: &tls_server_base
             "{{app_name}}_tls_server": {
               "class": "TLS_Server",
               "certificates": [{ "certificate": "{{app_name}}_certificate" }]
+              "cipherGroup": {
+                    "bigip": "{{tls_server_cipher_group_name}}"
+                },
             },
             "{{app_name}}_certificate": {
               "class": "Certificate",
